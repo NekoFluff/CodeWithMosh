@@ -1,10 +1,11 @@
 const express = require('express');
-const log = require('./logger');
-const Joi = require('joi');
+const logger = require('./middleware/logger');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const app = express();
 const config = require('config');
+const courses = require('./routes/courses')
+const home = require('./routes/home')
 
 // Debuggers
 const startupDebugger = require('debug')('app:startup');
@@ -27,7 +28,8 @@ if (app.get('env') === 'development') {
     app.use(morgan('tiny'));
     startupDebugger('Morgan enabled...');
 }
-app.use(log);
+
+app.use(logger);
 
 dbDebugger('Connected to the database...');
 
@@ -36,16 +38,8 @@ app.use(function(req, res, next) {
     next();
 });
 
-const courses = [
-    { id: 1, name: 'course1' },
-    { id: 2, name: 'course2' },
-    { id: 3, name: 'course3' },
-];
-
-app.get('/', (req, res) => {
-    //res.send('Hello World');
-    res.render('index', { title: "My Express App", message: "Hello World!"})
-});
+app.use('/api/courses', courses);
+app.use('/', home);
 
 port = process.env.PORT || 3000
 app.listen(port, () => {

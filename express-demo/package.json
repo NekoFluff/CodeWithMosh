@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "common": "^0.2.5",
     "config": "^3.0.1",
     "debug": "^4.1.1",
     "express": "^4.16.4",
