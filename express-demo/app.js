@@ -17,7 +17,7 @@ console.log(`Mail Server: ${config.get('mail.host')}`);
 console.log(`Mail Server Password: ${config.get('mail.password')}`);
 
 app.set('view engine', 'pug')
-app.set('views', './views')
+app.set('views', './views') // Views for template engine
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
