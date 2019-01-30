@@ -14,20 +14,42 @@ const courseSchema = new mongoose.Schema({
     minlength: 5,
     maxlength: 255,
     //match: /pattern/
+    
   },
   category: {
     type: String,
-    enum: ['web', 'mobile', 'network']
+    required: true,
+    enum: ['web', 'mobile', 'network'],
+    lowercase: true,
+    trim: true
   },
   author: String,
-  tags: [ String ],
+  tags: {
+    type: Array,
+    validate: {
+      isAsync: true,
+      validator: function(v, callback) {
+        // Do some async work
+
+        setTimeout(() => {
+          const result = v && v.length > 0;
+          callback(result);
+
+        }, 3000)
+        
+      },
+      message: 'A course should have at least one tag.'
+    }
+  },
   date: { type: Date, default: Date.now },
   isPublished: Boolean,
   price: {
     type: Number,
+    required: function() { return this.isPublished; },
     min: 10,
     max: 200,
-    required: function() { return this.isPublished }
+    get: function(v) { return Math.round(v) },
+    set: function(v) { return Math.round(v) },
   }
 });
 
@@ -44,19 +66,21 @@ const Teacher = mongoose.model('Teacher', teacherSchema)
 async function createCourse() {
   // Course object instance (a.k.a. Document)
   const course = new Course({
-    // name: 'Angular Course',
-    author: 'Mosh',
-    tags: ['angular', 'frontend'],
+    name: 'Another Angular Course',
+    author: 'Alex',
+    tags: ['frontend'],
     isPublished: true,
-    category: '-'
+    category: 'WEB',
+    price: 15.75
   });
   
   try {
-    await course.validate();
-    // const result = await course.save();
-    // console.log(result);
+    const result = await course.save();
+    console.log(result);
   } catch (ex) {
-    console.log(ex.message);
+    for (field in ex.errors) {
+      console.log(ex.errors[field].message);
+    }
   }
   
 }
@@ -88,7 +112,7 @@ async function getCourses() {
   // const courses = await Course
   //   .find({ author: 'Mosh', isPublished: true })
   //   //.find({ price: { $gte: 10, $lte: 20 }})
-  //   //.find({ price: {$in: [10, 15, 20] }}) // Sect  courses that cost 10, 15, or 20 dollars
+  //   //.find({ price: { $in: [10, 15, 20] }}) // Sect  courses that cost 10, 15, or 20 dollars
   //   .limit(10)
   //   .sort({ name: 1 })
   //   .select({ name: 1, tags: 1 });
