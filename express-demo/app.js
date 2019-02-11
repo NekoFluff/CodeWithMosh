@@ -4,17 +4,32 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const app = express();
 const config = require('config');
-const courses = require('./routes/courses')
-const home = require('./routes/home')
+const courses = require('./routes/courses');
+const users = require('./routes/users');
+const home = require('./routes/home');
+const auth = require('./routes/auth');
+const mongoose = require('mongoose');
+
+try {
+    config.get('jwtPrivateKey')
+} catch (ex) {
+    console.log(ex.message)
+    process.exit(1);
+}
 
 // Debuggers
 const startupDebugger = require('debug')('app:startup');
 const dbDebugger = require('debug')('app:db');
 
+mongoose.connect('mongodb://localhost/playground', { useNewUrlParser: true }) // Conenct to the playground database
+.then(() => dbDebugger('Connected to the playground database!'))
+.catch((err) => dbDebugger('Failed to connect to the playground database', err));
+
+
 // Read the configuration
-console.log(`Name of application: ${config.get('name')}`);
-console.log(`Mail Server: ${config.get('mail.host')}`);
-console.log(`Mail Server Password: ${config.get('mail.password')}`);
+// console.log(`Name of application: ${config.get('name')}`);
+// console.log(`Mail Server: ${config.get('mail.host')}`);
+// console.log(`Mail Server Password: ${config.get('mail.password')}`);
 
 app.set('view engine', 'pug')
 app.set('views', './views') // Views for template engine
@@ -31,13 +46,13 @@ if (app.get('env') === 'development') {
 
 app.use(logger);
 
-dbDebugger('Connected to the database...');
-
 app.use(function(req, res, next) {
     console.log('Authenticating...');
     next();
 });
 
+app.use('/api/auth', auth);
+app.use('/api/users', users);
 app.use('/api/courses', courses);
 app.use('/', home);
 
