@@ -7,6 +7,7 @@ const bcrypt = require('bcrypt');
 
 router.get('/me', async (req, res) => {
     // Data is retrieved from the json web token
+    throw new Error('Failed at /me')
     const user = await User.findById(req.user._id).select('-password'); // Exclude the password property
     res.send(user);
 });

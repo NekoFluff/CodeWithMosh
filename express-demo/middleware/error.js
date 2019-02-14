@@ -1,4 +1,16 @@
+const winston = require('winston')
 module.exports = function(err, req, res, next) {
     // Log the exception
+    //winston.error(err.message, err); // Metadata is in second argument
+    winston.log('error', err.message, err);
+
+    // error
+    // warn
+    // info
+    // verbose
+    // debug
+    // silly
+
+
     res.status(500).send('Something failed')
 }

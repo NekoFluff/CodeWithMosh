@@ -1,4 +1,5 @@
 require('express-async-errors');
+const winston = require('winston');
 const express = require('express');
 const logger = require('./middleware/logger');
 const helmet = require('helmet');
@@ -11,6 +12,8 @@ const home = require('./routes/home');
 const auth = require('./routes/auth');
 const mongoose = require('mongoose');
 const error = require('./middleware/error')
+
+winston.add(winston.transports.File, { filename: 'logfile.log' })
 
 try {
     config.get('jwtPrivateKey')
