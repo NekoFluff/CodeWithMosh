@@ -10,7 +10,7 @@ const courses = [
     { id: 3, name: 'course3' },
 ];
 
-router.get('/', [auth], (req, res) => {
+router.get('/', [auth], (req, res, next) => {
     // Get courses from database
     res.send(courses);
 });

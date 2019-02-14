@@ -1,3 +1,4 @@
+require('express-async-errors');
 const express = require('express');
 const logger = require('./middleware/logger');
 const helmet = require('helmet');
@@ -9,6 +10,7 @@ const users = require('./routes/users');
 const home = require('./routes/home');
 const auth = require('./routes/auth');
 const mongoose = require('mongoose');
+const error = require('./middleware/error')
 
 try {
     config.get('jwtPrivateKey')
@@ -55,6 +57,9 @@ app.use('/api/auth', auth);
 app.use('/api/users', users);
 app.use('/api/courses', courses);
 app.use('/', home);
+
+// Error middleware
+app.use(error);
 
 port = process.env.PORT || 3000
 app.listen(port, () => {
