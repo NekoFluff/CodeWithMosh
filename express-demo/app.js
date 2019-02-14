@@ -1,5 +1,6 @@
 require('express-async-errors');
 const winston = require('winston');
+require('winston-mongodb');
 const express = require('express');
 const logger = require('./middleware/logger');
 const helmet = require('helmet');
@@ -14,7 +15,7 @@ const mongoose = require('mongoose');
 const error = require('./middleware/error')
 
 winston.add(winston.transports.File, { filename: 'logfile.log' })
-
+winston.add(winston.transports.MongoDB, { db: 'mongodb://localhost/playground', level: 'info'})
 try {
     config.get('jwtPrivateKey')
 } catch (ex) {
