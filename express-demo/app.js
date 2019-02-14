@@ -14,6 +14,11 @@ const auth = require('./routes/auth');
 const mongoose = require('mongoose');
 const error = require('./middleware/error')
 
+process.on('uncaughtException', (ex) => {
+    console.log('WE GOT AN UNCAUGHT EXCEPTION');
+    winston.error(ex.message, ex);
+})
+
 winston.add(winston.transports.File, { filename: 'logfile.log' })
 winston.add(winston.transports.MongoDB, { db: 'mongodb://localhost/playground', level: 'info'})
 try {
