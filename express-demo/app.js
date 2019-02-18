@@ -9,6 +9,7 @@ require('./startup/logging')(app);
 require('./startup/routes')(app);
 require('./startup/database')();
 require('./startup/config')();
+require('./startup/validation');
 
 port = process.env.PORT || 3000
 app.listen(port, () => {

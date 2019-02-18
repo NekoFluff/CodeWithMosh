@@ -1,10 +1,14 @@
 const express = require('express');
+const helmet = require('helmet');
+const genres = require('../routes/genres');
+const customers = require('../routes/customers');
+const movies = require('../routes/movies');
+const rentals = require('../routes/rentals');
 const courses = require('../routes/courses');
 const users = require('../routes/users');
 const home = require('../routes/home');
 const auth = require('../routes/auth');
 const error = require('../middleware/error')
-const helmet = require('helmet');
 
 module.exports = function(app) {    
     app.use(helmet())  
@@ -13,9 +17,15 @@ module.exports = function(app) {
     app.use(express.static('public')); 
     
     app.use('/api/auth', auth);
+    app.use('/api/genres', genres);
+    app.use('/api/customers', customers);
+    app.use('/api/movies', movies);
+    app.use('/api/rentals', rentals);
+    app.use('/api/users', users);
     app.use('/api/users', users);
     app.use('/api/courses', courses);
     app.use('/', home);
-    // Error middleware
+
+    // Error middleware (must be last one)
     app.use(error);
 }

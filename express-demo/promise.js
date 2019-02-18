@@ -25,4 +25,6 @@ function x() {
         resolve(1);
     }) 
 }
-Promise.race([p1, p2]).then(result => console.log(result)).catch(err => console.log("Error occured", err));
+Promise.race([p1, p2])
+    .then(result => console.log(result))
+    .catch(err => console.log("Error occured", err));

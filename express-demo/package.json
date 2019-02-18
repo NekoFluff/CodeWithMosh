@@ -20,9 +20,11 @@
     "winston": "^3.2.1",
     "winston-mongodb": "^4.0.3"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "jest": "^24.1.0"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --watchAll --verbose"
   },
   "author": "",
   "license": "ISC"
