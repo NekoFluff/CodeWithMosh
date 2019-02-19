@@ -1,5 +1,6 @@
 {
     "name": "Express Application",
-    "jwtPrivateKey": ""
+    "jwtPrivateKey": "",
+    "db": "mongodb://localhost/playground"
     
 }
