@@ -7,7 +7,7 @@ describe('auth middleware', () => {
     beforeEach(() => { server = require('../../app')})
     afterEach( async () => { 
         await Genre.remove({}); // Clean up the collection
-        server.close() 
+        await server.close() 
 
     })
 

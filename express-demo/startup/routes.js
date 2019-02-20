@@ -8,7 +8,8 @@ const courses = require('../routes/courses');
 const users = require('../routes/users');
 const home = require('../routes/home');
 const auth = require('../routes/auth');
-const error = require('../middleware/error')
+const error = require('../middleware/error');
+const returns = require('../routes/returns');
 
 module.exports = function(app) {    
     app.use(helmet())  
@@ -24,6 +25,7 @@ module.exports = function(app) {
     app.use('/api/users', users);
     app.use('/api/users', users);
     app.use('/api/courses', courses);
+    app.use('/api/returns', returns);
     app.use('/', home);
 
     // Error middleware (must be last one)
