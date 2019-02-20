@@ -1639,3 +1639,4 @@
 {"message":"Listening to port 3000","level":"info"}
 {"message":"Connected to mongodb://localhost/playground_test","level":"info"}
 {"message":"Listening to port 3000","level":"info"}
+{"message":"Connected to mongodb://localhost/playground_test","level":"info"}
