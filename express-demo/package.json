@@ -29,7 +29,11 @@
     "supertest": "^3.4.2"
   },
   "scripts": {
-    "test": "jest --runInBand --watchAll --verbose --coverage "
+    "test": "jest --runInBand --watchAll --verbose --coverage ",
+    "start": "node app.js"
+  },
+  "engines": {
+    "node": "10.15.0"
   },
   "author": "",
   "license": "ISC"
