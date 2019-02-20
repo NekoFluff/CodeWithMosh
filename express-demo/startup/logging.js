@@ -7,7 +7,7 @@ module.exports = function (app) {
     // Handle Exceptions
     // (DEPRECATED) winston.handleExceptions(new winston.transports.File({ filename: 'uncaughtExceptions.log' }))
     winston.exceptions.handle(
-        new winston.transports.File({ filename: 'uncaughtExceptions.log' }),
+        new winston.transports.File({ filename: 'uncaughtExceptions.log', format: winston.format.simple() }),
         new winston.transports.Console({ format: winston.format.simple(), colorize: true, prettyPrint: true })
     )
 

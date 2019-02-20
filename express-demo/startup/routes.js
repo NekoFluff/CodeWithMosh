@@ -1,5 +1,4 @@
 const express = require('express');
-const helmet = require('helmet');
 const genres = require('../routes/genres');
 const customers = require('../routes/customers');
 const movies = require('../routes/movies');
@@ -12,7 +11,6 @@ const error = require('../middleware/error');
 const returns = require('../routes/returns');
 
 module.exports = function(app) {    
-    app.use(helmet())  
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
     app.use(express.static('public')); 
